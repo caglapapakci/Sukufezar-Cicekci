@@ -1,0 +1,49 @@
+﻿@using Projem.BOL.Entities
+@model Address
+<div class="page-top-info">
+    <div class="container">
+        <h4>@memberDil.addressUpdate.uyelikbilgilerim</h4>
+        <div class="site-pagination">
+            <a href="/">@memberDil.addressUpdate.anasayfa</a> /
+            <a href="">@memberDil.addressUpdate.adreslerim</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+
+                @using (Html.BeginForm("AddressUpdate", "Member", FormMethod.Post, new { @class = "checkout-form" }))
+                {
+                <div class="cf-title">@memberDil.addressUpdate.adreslerim2</div>
+                    <div class="row address-inputs">
+
+                        <div class="col-md-12">
+                            <input type="text" placeholder="@memberDil.addressUpdate.adresadi" name="Name" value="@Model.Name">
+                            <input type="text" placeholder="@memberDil.addressUpdate.adres" name="MemberAddress" value="@Model.MemberAddress">
+                            <input type="text" placeholder="@memberDil.addressUpdate.sehir" name="City" value="@Model.City">
+                            <input type="text" placeholder="@memberDil.addressUpdate.ilce" name="District" value="@Model.District">
+                            <input type="hidden" name="MemberID" value="@Model.MemberID" />
+                        </div>
+                        <input type="submit" class="site-btn submit-order-btn" value="@memberDil.addressUpdate.adresiguncelle" />
+
+                    </div>
+                }
+            </div>
+            <div class="col-lg-4 order-1 order-lg-2">
+                <div class="checkout-cart">
+                    <h3>@memberDil.addressUpdate.adresiguncelle</h3>
+                    <ul class="product-list">
+                        @foreach (Address hba in ViewBag.Address)
+                        {
+                            <li><a href="@Url.Action("AddressUpdate","Member",new {ID=hba.ID })">@hba.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

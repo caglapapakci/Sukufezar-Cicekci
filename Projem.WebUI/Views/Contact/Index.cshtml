@@ -1,0 +1,110 @@
+﻿@using Projem.WebUI.ViewModels
+@using Projem.BOL.Entities
+@model IndexVM
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>@contactDil.Index.iletisimsayfasi</h4>
+        <div class="site-pagination">
+            <a href="@Url.Action("Index","Home")">@contactDil.Index.anasayfa</a> /
+            <a href="@Url.Action("Index","Contact")">@contactDil.Index.iletisim</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- Contact section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 contact-info">
+                <h3>@contactDil.Index.iletisimegec</h3>
+                <p>Main Str, no 23, New York</p>
+                <p>+546 990221 123</p>
+                <p>hosting@contact.com</p>
+                <div class="contact-social">
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    
+                </div>
+                <form class="contact-form" action="/Contact/Index" method="post">
+                    <input type="text" placeholder="@contactDil.Index.isim" name="NameSurname">
+                    <input type="text" placeholder="@contactDil.Index.email" name="Email">
+                    <input type="text" placeholder="@contactDil.Index.konu" name="Subject">
+                    <textarea placeholder="@contactDil.Index.mesaj" name="Message"></textarea>
+                    <button type="submit" class="site-btn">@contactDil.Index.gonder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="map"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14376.077865872314!2d-73.879277264103!3d40.757667781624285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1546528920522" style="border:0" allowfullscreen></iframe></div>
+</section>
+<!-- Contact section end -->
+<!-- Related product section -->
+<section class="related-product-section spad">
+    <div class="container">
+        <div class="section-title">
+            <h2>@contactDil.Index.favoriler</h2>
+        </div>
+        <div class="row">
+            @if (Model.FavoriteProducts != null)
+            {
+                foreach (Product product in Model.FavoriteProducts.Select(s => s.Product))
+                {
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="@product.Pictures.FirstOrDefault(f=>f.PIndex==1).FPath" alt="@product.Name" style="height:250px">
+                            <div class="pi-links">
+                                <a onclick="functAddCart(@product.ID,1)" class="add-card" style="cursor:pointer"><i class="flaticon-bag"></i><span>@contactDil.Index.sepeteekle</span></a>
+                              
+                                <a onclick="functAddFavorite(this)" class="wishlist-btn favoricss" style="cursor:pointer"><i class="fas fa-heart" style="color:red"></i></a>
+                                <input type="hidden" value="@product.ID" class="productID"/>
+                              
+
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>@product.Price TL</h6>
+                            <a href="@Url.Action("Detail","Product",new {ID=product.ID })"><p>@product.Name</p></a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                foreach (Product product in Model.BestSellerProducts)
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="@product.Pictures.FirstOrDefault(f=>f.PIndex==1).FPath" alt="@product.Name" style="height:250px">
+                                <div class="pi-links">
+                                    <a onclick="functAddCart(@product.ID,1)" class="add-card" style="cursor:pointer"><i class="flaticon-bag"></i><span>@contactDil.Index.sepeteekle2</span></a>
+                                    @if (User.Identity.IsAuthenticated)
+                                     {
+                                        Favorite favori = product.Favorites.FirstOrDefault(f => f.MemberID == ViewBag.memberID);
+                                        if (favori != null)
+                                        {
+                                            <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart" style="color:red"></i></a>
+                                        }
+                                        else
+                                        {
+                                         <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart"></i></a>                                                         
+                                        }
+
+                                       <input type="hidden" value="@product.ID" class="productID" />
+                                     }
+                                </div>
+                            </div>
+                            <div class="pi-text">
+                                <h6>@product.Price TL</h6>
+                                <a href="@Url.Action("Detail","Product",new {ID=product.ID })"><p>@product.Name</p></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+<!-- Related product section end -->

@@ -1,0 +1,26 @@
+﻿@using Projem.BOL.Entities
+@model IEnumerable<TContent>
+@{
+    TContent metaContent = Model.Where(w => w.Filter == "Meta").FirstOrDefault();
+}
+
+<head>
+    <title>Şükufezar | Alışverişin Yeni Adresi</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="@metaContent.Column1">
+    <meta name="keywords" content="@metaContent.Column2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/Content/img/favicon.ico" rel="shortcut icon" />
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/Content/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/Content/css/flaticon.css" />
+    <link rel="stylesheet" href="/Content/css/slicknav.min.css" />
+    <link rel="stylesheet" href="/Content/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/Content/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/Content/css/animate.css" />
+    <link rel="stylesheet" href="/Content/css/style.css" />
+    <link href="~/Content/css/favori.css" rel="stylesheet" />
+
+</head>
+

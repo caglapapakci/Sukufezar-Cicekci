@@ -1,0 +1,46 @@
+﻿@using Projem.BOL.Entities
+@model Member
+<div class="page-top-info">
+    <div class="container">
+        <h4>@memberDil.MyMembershipInformation.uyelikbilgilerim</h4>
+        <div class="site-pagination">
+            <a href="/">@memberDil.MyMembershipInformation.anasayfa</a> /
+            <a href="">@memberDil.MyMembershipInformation.uyelikbilgilerim1</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+
+                @using (Html.BeginForm("MyMembershipInformation", "Member", FormMethod.Post, new { @class = "checkout-form" }))
+                {
+                <div class="cf-title">@memberDil.MyMembershipInformation.uyelikbilgilerim2</div>
+                    <div class="row address-inputs">
+
+                        <div class="col-md-12">
+                            <input type="text" placeholder="@memberDil.MyMembershipInformation.ad" name="Name" value="@Model.Name">
+                            <input type="text" placeholder="@memberDil.MyMembershipInformation.soyad" name="SurName" value="@Model.SurName">
+                            <input type="text" placeholder="@memberDil.MyMembershipInformation.email" name="MailAddress" value="@Model.MailAddress">
+                            <input type="text" placeholder="@memberDil.MyMembershipInformation.sifre" name="Password" value="@Model.Password">
+                            <input type="hidden" placeholder="Şifre2" name="Password2" value="@Model.Password2">
+                            <input type="hidden" placeholder="IP" name="LastIP" value="@Model.LastIP">
+                            <input type="hidden" placeholder="SonGirisTarihi" name="LastDate" value="@Model.LastDate">
+                            <input type="hidden" placeholder="Siparis" name="Order" value="@Model.Order">
+                            <input type="hidden" placeholder="Rol" name="Role" value="@Model.Role">
+                            <input type="hidden" placeholder="Favoriler" name="Favorites" value="@Model.Favorites">
+                            <input type="hidden" placeholder="Adresler" name="Addresses" value="@Model.Addresses">
+                            <input type="hidden" name="MemberID" value="@Model.ID" />
+                        </div>
+                        <input type="submit" class="site-btn submit-order-btn" value="@memberDil.MyMembershipInformation.bilgileriguncelle" />
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

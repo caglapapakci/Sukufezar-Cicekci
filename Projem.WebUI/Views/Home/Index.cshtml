@@ -1,0 +1,168 @@
+﻿@using Projem.WebUI.ViewModels
+@using Projem.BOL.Entities
+@model IndexVM
+<section class="hero-section">
+    <div class="hero-slider owl-carousel">
+        @foreach (Slider hbs in Model.Sliders)
+        {
+            <div class="hs-item set-bg" data-setbg="@hbs.Picture">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7 text-white">
+                            <span>@hbs.Title</span>
+                            @*<h2>@hbs.SubTitle.Substring(0, 11)</h2>*@
+                            <h2>@(hbs.SubTitle.Length > 11 ? hbs.SubTitle.Substring(0, 11) : hbs.SubTitle)</h2>
+                            <p>@hbs.Description</p>
+                            <a href="@hbs.CategoryLink" class="site-btn sb-white">@dil.Index.kesfet</a>
+                            <a href="@hbs.ProductLink" class="site-btn sb-dark">@dil.Index.sepet</a>
+                        </div>
+                    </div>
+                    <div class="offer-card text-white">
+                        <span>%10</span>
+                        @*<h2>@hbs.Price.ToString("#,#0")</h2>*@
+                        <h3>@dil.Index.indirim</h3>
+                        @*<p>ŞİMDİ AL</p>*@
+                        <h3>@dil.Index.simdial</h3>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="container">
+        <div class="slide-num-holder" id="snh-1"></div>
+    </div>
+</section>
+<!-- Hero section end -->
+<!-- Features section -->
+<section class="features-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="/Content/img/icons/1.png" alt="#">
+                    </div>
+                    <h2>@dil.Index.hizliodeme</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="/Content/img/icons/2.png" alt="#">
+                    </div>
+                    <h2>@dil.Index.esurunler</h2>
+                </div>
+            </div>
+            <div class="col-md-4 p-0 feature">
+                <div class="feature-inner">
+                    <div class="feature-icon">
+                        <img src="/Content/img/icons/3.png" alt="#">
+                    </div>
+                    <h2>@dil.Index.ucretsizhizlikargo</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Features section end -->
+<!-- letest product section -->
+<section class="top-letest-product-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>@dil.Index.enyeniurunler</h2>
+        </div>
+        <div class="product-slider owl-carousel">
+
+            @foreach (Product product in Model.NewestProducts)
+            {
+
+                <div class="product-item">
+                    <div class="pi-pic" >
+                        <img src="@product.Pictures.FirstOrDefault(f=>f.PIndex==1).FPath" alt="@product.Name" style="height:250px">
+                        <div class="pi-links">
+                            <a onclick="functAddCart(@product.ID,1)" class="add-card" style="cursor:pointer"><i class="flaticon-bag"></i><span>SEPETE EKLE</span></a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                Favorite favori = product.Favorites.FirstOrDefault(f => f.MemberID == ViewBag.memberID);
+                                if (favori != null)
+                                {
+                                    <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart" style="color:red"></i></a>
+                                }
+                                else {
+                                    <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart" ></i></a>
+                                }
+
+                                <input type="hidden" value="@product.ID" class="productID" />
+                            }
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>@product.Price TL</h6>
+                        <a href="@Url.Action("Detail","Product",new {ID=product.ID })"><p>@product.Name</p></a>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+
+
+
+        </div>
+    </div>
+</section>
+<section class="banner-section">
+    <div class="container">
+        <img src="@Model.Advertisements.FirstOrDefault(f=>f.PIndex==1).FPath" alt="@Model.Advertisements.FirstOrDefault(f=>f.PIndex==1).Name" />
+    </div>
+</section>
+<section class="product-filter-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>@dil.Index.encoksatilanurunler</h2>
+        </div>
+        <div class="row">
+            @foreach (Product product in Model.BestSellerProducts)
+             {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="@product.Pictures.FirstOrDefault(f=>f.PIndex==1).FPath" alt="@product.Name" style="height:250px">
+                            <div class="pi-links">
+                                <a onclick="functAddCart(@product.ID,1)" class="add-card" style="cursor:pointer"><i class="flaticon-bag"></i><span>SEPETE EKLE</span></a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    Favorite favori = product.Favorites.FirstOrDefault(f => f.MemberID == ViewBag.memberID);
+                                    if (favori != null)
+                                    {
+                                        <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart" style="color:red"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a onclick="functAddFavorite(this)" class="wishlist-btn" style="cursor:pointer"><i class="fas fa-heart"></i></a>
+                                    }
+
+                                    <input type="hidden" value="@product.ID" class="productID" />
+                                }
+                            </div>
+                        </div>
+                        <div class="pi-text">
+                            <h6>@product.Price TL</h6>
+                            <a href="@Url.Action("Detail","Product",new {ID=product.ID })"><p>@product.Name</p></a>
+                        </div>
+                    </div>
+                </div>
+             }
+        </div>
+    </div>
+</section>
+<!-- Product filter section end -->
+<!-- Banner section -->
+<section class="banner-section">
+    <div class="container">
+        <img src="@Model.Advertisements.FirstOrDefault(f=>f.PIndex==2).FPath" alt="@Model.Advertisements.FirstOrDefault(f=>f.PIndex==2).Name" />
+    </div>
+</section>

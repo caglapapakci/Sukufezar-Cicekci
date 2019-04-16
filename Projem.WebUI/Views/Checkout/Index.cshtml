@@ -1,0 +1,61 @@
+﻿@using Projem.WebUI.ViewModels
+@using Projem.BOL.Entities
+@model CartVM
+
+<!-- Page info -->
+<div class="page-top-info">
+    <div class="container">
+        <h4>@checkoutIndex.Index.sepet</h4>
+        <div class="site-pagination">
+            <a href="">@checkoutIndex.Index.anasayfa</a> /
+            <a href="">@checkoutIndex.Index.sepetiniz</a>
+        </div>
+    </div>
+</div>
+<!-- Page info end -->
+<!-- checkout section  -->
+<section class="checkout-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-2 order-lg-1">
+                <form class="checkout-form">
+                    <div class="cf-title">@checkoutIndex.Index.faturaadresi</div>
+                    <div class="row">
+                        @Html.DropDownList("checkoutAddress", new SelectList(Model.Addresses, "ID", "Name"), @checkoutIndex.Index.yeniadres, new { onchange = "functcheckoutAddress(this)", @class = "checkoutAddress" })
+                    </div>
+                    <div class="row address-inputs">
+                        <div class="col-md-12">
+                            <input type="text" placeholder="@checkoutIndex.Index.adresadi" name="Name" class="Name">
+                            <input type="text" placeholder="@checkoutIndex.Index.adres" name="Address" class="Address">
+                            <input type="text" placeholder="@checkoutIndex.Index.sehir" name="City" class="City">
+                            <input type="text" placeholder="@checkoutIndex.Index.ilce" name="District" class="District">
+
+                        </div>
+                    </div>
+                    <button class="site-btn submit-order-btn">@checkoutIndex.Index.siparisver</button>
+                </form>
+            </div>
+            <div class="col-lg-4 order-1 order-lg-2">
+                <div class="checkout-cart">
+                    <h3>@checkoutIndex.Index.sepetiniz2</h3>
+                    <ul class="product-list">
+                        @foreach (CartDetail hbcd in Model.CartDetails)
+                        {
+                            <li>
+                                <div class="pl-thumb"><img src="@hbcd.FPath" alt=""></div>
+                                <h6>@hbcd.ProductName</h6>
+                                <p>@hbcd.Price TL</p>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="price-list">
+                        <li>@checkoutIndex.Index.toplam<span>@Model.CartDetails.Sum(s => s.Price * s.Quantity) TL</span></li>
+                        <li>@checkoutIndex.Index.kargo<span>@checkoutIndex.Index.ucretsiz</span></li>
+                        <li class="total">@checkoutIndex.Index.toplam2<span>@Model.CartDetails.Sum(s => s.Price * s.Quantity) TL</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- checkout section end -->
